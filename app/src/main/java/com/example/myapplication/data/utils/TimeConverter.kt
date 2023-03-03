@@ -1,4 +1,4 @@
-package com.example.myapplication.utils
+package com.example.myapplication.data.utils
 
 
 import java.sql.Date
@@ -15,5 +15,4 @@ fun convertTime(timeStap : Long?) : String{
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         sdf.timeZone = TimeZone.getDefault()
         return sdf.format(date)
-
 }
