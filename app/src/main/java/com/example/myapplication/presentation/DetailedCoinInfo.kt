@@ -15,9 +15,6 @@ import com.example.myapplication.databinding.CoinInfoBinding
 
 class DetailedCoinInfo : AppCompatActivity() {
 
-    private val viewModel : CoinViewModel by lazy {
-        ViewModelProvider(this)[CoinViewModel::class.java]
-    }
     private val binding : ActivityDetailedCoinInfoBinding by lazy {
         ActivityDetailedCoinInfoBinding.inflate(layoutInflater)
     }
@@ -28,26 +25,13 @@ class DetailedCoinInfo : AppCompatActivity() {
         if(!intent.hasExtra(EXTRA_FSYM_KEY)){
             finish()
         }
-        viewSetting()
+        val fSym = intent.getStringExtra(EXTRA_FSYM_KEY)
+        val fragment = DetailedCoinInfoFragment.newInstance(fSym)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shop_item_container,fragment)
+            .commit()
     }
 
-    private fun viewSetting() {
-        val fsym = intent.getStringExtra(EXTRA_FSYM_KEY)?.let {
-            viewModel.getCoinByFsym(it)
-        }
-        viewModel.particularCoinInfo.observe(this) {
-            with(binding) {
-                tvFromSymbol.text = it.fromSymbol
-                tvToSymbol.text = it.toSymbol
-                tvPrice.text = it.price
-                tvMinPrice.text = it.lowDay
-                tvMaxPrice.text = it.highDay
-                tvLastMarket.text = it.lastMarket
-                tvLastUpdate.text = it.lastUpdate
-                Picasso.get().load(it.imageUrl).into(ivLogoCoin)
-            }
-        }
-    }
 
     companion object{
         private const val EXTRA_FSYM_KEY = "fSym"

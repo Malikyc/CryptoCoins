@@ -7,5 +7,5 @@ interface CoinRepository {
 
     suspend fun getCoinInfo(fromSymbol:String) : CoinInfo
 
-    suspend fun loadData()
+     fun loadData()
 }

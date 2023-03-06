@@ -32,9 +32,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadData(){
-        viewModelScope.launch {
             loadDataUseCase.invoke()
-        }
     }
 
     fun getCoinByFsym (fsym:String) {
