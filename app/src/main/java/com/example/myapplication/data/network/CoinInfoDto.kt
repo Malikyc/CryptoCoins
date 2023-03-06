@@ -1,14 +1,13 @@
-package com.example.myapplication.pojo
+package com.example.myapplication.data.network
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.myapplication.api.ApiFactory
-import com.example.myapplication.utils.convertTime
+import com.example.myapplication.data.utils.convertTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "coin_info_list")
-data class CoinPriceInfo (
+
+data class CoinInfoDto (
     @SerializedName("TYPE")
     @Expose
     val type: String?,
@@ -127,10 +126,4 @@ data class CoinPriceInfo (
     @SerializedName("IMAGEURL")
     @Expose
     val imageUrl: String?
-        ){
-fun getFormatedLastUpdate():String{
-    return convertTime(lastUpdate)
-}
-fun getFullImgUrl():String{
-    return ApiFactory.BASE_IMAGE_URl + imageUrl
-}}
+        )

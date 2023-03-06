@@ -1,11 +1,12 @@
-package com.example.myapplication.pojo
+package com.example.myapplication.data.network
 
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CoinPriceInfoRawData (
+data class CoinInfoJsonObject (
     @SerializedName("RAW")
+
     @Expose
-    val coinInfoJsonObject: JsonObject ?= null
+    val jsonObject: JsonObject ?= null
         )
