@@ -1,9 +1,11 @@
 package com.example.myapplication.presentation
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.repository.CoinRepositoryImpl
 import com.example.myapplication.domain.CoinInfo
@@ -11,15 +13,14 @@ import com.example.myapplication.domain.GetCoinInfoListUseCase
 import com.example.myapplication.domain.GetCoinInfoUseCase
 import com.example.myapplication.domain.LoadDataUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CoinViewModel(application: Application) : AndroidViewModel(application) {
-    private val coinRepository = CoinRepositoryImpl(application)
+class CoinViewModel @Inject constructor(
+                                        private val getCoinInfoListUseCase : GetCoinInfoListUseCase,
+                                        private val getCoinInfoUseCase : GetCoinInfoUseCase,
+                                        private val loadDataUseCase : LoadDataUseCase) : ViewModel() {
 
-    private val getCoinInfoListUseCase = GetCoinInfoListUseCase(coinRepository)
 
-    private val getCoinInfoUseCase = GetCoinInfoUseCase(coinRepository)
-
-    private val loadDataUseCase = LoadDataUseCase(coinRepository)
 
      val coinList = getCoinInfoListUseCase.invoke()
 

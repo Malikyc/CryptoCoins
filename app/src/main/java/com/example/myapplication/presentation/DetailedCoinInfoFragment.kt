@@ -1,28 +1,45 @@
 package com.example.myapplication.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.CoinApp
 import com.example.myapplication.databinding.FragmentDetailedCoinInfoBinding
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class DetailedCoinInfoFragment : Fragment() {
+
+    private val component by lazy {
+        (requireActivity().application as CoinApp).component
+    }
 
     private val fsym : String by lazy {
         requireArguments().getString(EXTRA_FSYM_KEY).toString()
             ?: throw RuntimeException("No fromSymbol passed")
     }
 
-    private val viewModel : CoinViewModel by lazy {
-        ViewModelProvider(this)[CoinViewModel::class.java]
+    private  val viewModel : CoinViewModel by lazy {
+        ViewModelProvider(this,viewModelFactory)[CoinViewModel::class.java]
     }
+
+    @Inject
+    lateinit var viewModelFactory : CoinViewModelFactory
+
+
     private var _binding : FragmentDetailedCoinInfoBinding? = null
     private val binding : FragmentDetailedCoinInfoBinding
     get(){
         return _binding ?: throw RuntimeException("FragmentDetailedCoinInfoBinding is null")
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

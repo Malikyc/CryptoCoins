@@ -3,14 +3,25 @@ package com.example.myapplication.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.CoinApp
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.di.CoinAppComponent
 import com.example.myapplication.presentation.adapters.CoinAdapter
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val component by lazy {
+        (application as CoinApp).component
+    }
+    @Inject
+    lateinit var viewModelFactory : CoinViewModelFactory
+
+
    private  val viewModel : CoinViewModel by lazy {
-       ViewModelProvider(this)[CoinViewModel::class.java]
+       ViewModelProvider(this,viewModelFactory)[CoinViewModel::class.java]
    }
     private val binding : ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -22,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.RecyclerView.adapter = coinAdapter
