@@ -8,8 +8,9 @@ import com.example.myapplication.data.network.CoinInfoListOfData
 import com.example.myapplication.data.utils.convertTime
 import com.example.myapplication.domain.CoinInfo
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class CoinInfoMapper {
+class CoinInfoMapper @Inject constructor() {
     fun mapDtoToDbModel(coinInfoDto: CoinInfoDto) : CoinInfoDbModel{
         return CoinInfoDbModel(
             fromSymbol= coinInfoDto.fromSymbol,
